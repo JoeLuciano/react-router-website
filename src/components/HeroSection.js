@@ -3,6 +3,7 @@ import '../App.css';
 import { Button } from './Button';
 import './HeroSection.css';
 import video from '../videos/video-1.mp4';
+import { motion } from 'framer-motion';
 
 function HeroSection() {
   const [isImageBackground, setImageBackground] = useState('true');
@@ -24,9 +25,23 @@ function HeroSection() {
             : 'hero-container remove-background'
         }>
         <video src={video} autoPlay loop muted />
-        <h1>ADVENTURE AWAITS</h1>
-        <p>What are you waiting for?</p>
-        <div className='hero-btns'>
+        <motion.h1
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1 }}>
+          ADVENTURE AWAITS
+        </motion.h1>
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.2, duration: 1 }}>
+          What are you waiting for?
+        </motion.p>
+        <motion.div
+          className='hero-btns'
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.4, duration: 1 }}>
           <Button
             className='btns'
             buttonStyle='btn--outline'
@@ -39,7 +54,7 @@ function HeroSection() {
             buttonSize='btn--large'>
             WATCH TRAILER <i className='far fa-play-circle' />
           </Button>
-        </div>
+        </motion.div>
       </div>
     </div>
   );

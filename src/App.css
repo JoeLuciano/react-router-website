@@ -42,3 +42,32 @@
   color: #fff;
   font-size: 100px;
 }
+
+.csvContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.csvContainer button {
+  padding: 8px 20px;
+  border-radius: 2px;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px 20px;
+  font-size: 20px;
+  padding: 8px 20px;
+  border: 1px solid black;
+  transition: all 0.3s ease-out;
+  background: #242424;
+  background: #fff;
+  color: #242424;
+}
+
+.csvContainer button:hover {
+  background: #242424;
+  color: #fff;
+  transition: all 0.3s ease-out;
+}

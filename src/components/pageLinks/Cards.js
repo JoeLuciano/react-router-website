@@ -7,14 +7,26 @@ import FCC from '../../images/freecodecamp.png';
 import image3 from '../../images/img-3.jpg';
 import image4 from '../../images/img-4.jpg';
 import image8 from '../../images/img-8.jpg';
+import { motion } from 'framer-motion';
+import useScrollPosition from '@react-hook/window-scroll';
 
 function Cards() {
+  const scrollY = useScrollPosition(60 /*fps*/);
   return (
     <div className='cards'>
-      <h1>Check out these EPIC Destinations!</h1>
+      <motion.h1
+        initial={{ opacity: 0 }}
+        animate={{ opacity: scrollY > 400 ? 1 : 0 }}
+        transition={{ duration: 1 }}>
+        Check out these EPIC Destinations!
+      </motion.h1>
       <div className='cards__container'>
         <div className='cards__wrapper'>
-          <ul className='cards__items'>
+          <motion.ul
+            className='cards__items'
+            initial={{ opacity: 0 }}
+            animate={{ opacity: scrollY > 600 ? 1 : 0 }}
+            transition={{ duration: 1 }}>
             <CardItem
               src={FMB}
               text='Review my work in the FrontEnd Masters Bootcamp!'
@@ -27,8 +39,12 @@ function Cards() {
               label='Courswork'
               path='/freecodecamp'
             />
-          </ul>
-          <ul className='cards__items'>
+          </motion.ul>
+          <motion.ul
+            className='cards__items'
+            initial={{ opacity: 0 }}
+            animate={{ opacity: scrollY > 800 ? 1 : 0 }}
+            transition={{ duration: 1 }}>
             <CardItem
               src={image3}
               text='Set Sail in the Atlantic Ocean visiting Uncharted Waters'
@@ -47,7 +63,7 @@ function Cards() {
               label='Adrenaline'
               path='/sign-up'
             />
-          </ul>
+          </motion.ul>
         </div>
       </div>
     </div>
