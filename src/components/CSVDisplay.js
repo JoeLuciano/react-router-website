@@ -3,6 +3,7 @@ import Papa from 'papaparse';
 import { withRouter } from 'react-router-dom';
 import data from './temp-data.csv';
 import FileSaver from 'file-saver';
+import { Line } from 'react-chartjs-2';
 
 class DataController extends React.Component {
   constructor(props) {
@@ -47,6 +48,19 @@ class DataController extends React.Component {
     const dateTime = String(lastEntry[0]).split(' ');
     const time = (' ' + dateTime[1]).slice(1);
 
+    let lastTenTimes = [];
+    let lastTenTemps = [];
+    for (let i = this.state.data.length; i > 2; i--) {
+      const currentEntry = String(
+        this.state.data[this.state.data.length - i]
+      ).split(',');
+
+      const currentTime = currentEntry[0].split(' ')[1];
+      lastTenTimes.push(currentTime);
+      const currentTemp = (' ' + currentEntry[1]).slice(1);
+      lastTenTemps.push(currentTemp);
+    }
+
     function saveCSV() {
       FileSaver.saveAs(
         data,
@@ -54,18 +68,43 @@ class DataController extends React.Component {
       );
     }
 
-    if (time.includes(':00:00') || time.includes(':00:01')) {
+    if (
+      time.includes(':00:00') ||
+      time.includes(':00:01') ||
+      time.includes(':00:02') ||
+      time.includes(':00:03')
+    ) {
       saveCSV();
     }
 
-    console.log();
+    console.log(lastTenTimes, lastTenTemps);
     return (
-      <div className='csvContainer'>
-        <h1>Date: {dateTime[0]}</h1>
-        <h1>Time: {dateTime[1]}</h1>
-        <h1>Temperature: {lastEntry[1]}&deg;F</h1>
-        <button onClick={saveCSV}>Save today's temperature data</button>
-      </div>
+      <>
+        <div className='csvContainer'>
+          <h1>Date: {dateTime[0]}</h1>
+          <h1>Time: {dateTime[1]}</h1>
+          <h1>Temperature: {lastEntry[1]}&deg;F</h1>
+          <button onClick={saveCSV}>Save today's temperature data</button>
+
+          <Line
+            data={{
+              labels: lastTenTimes,
+              datasets: [
+                {
+                  label: 'Temperature (Degrees Farenheit)',
+                  data: lastTenTemps,
+                  backgroundColor: ['rgba(255, 99, 132, 0.2)'],
+                  borderColor: ['rgba(255, 99, 132, 1)'],
+                  borderWidth: 1,
+                },
+              ],
+            }}
+            width={400}
+            height={100}
+            style={{ margin: '50px 50px' }}
+            options={{ maintainAspectRatio: true }}></Line>
+        </div>
+      </>
     );
   }
 }
